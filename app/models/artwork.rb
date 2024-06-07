@@ -27,4 +27,9 @@ class Artwork < ApplicationRecord
   through: :artwork_shares,
   source: :viewer
 
+  def self.artworks_for_user_id(user_id)
+    owned_artworks = Artwork.where(artist_id: user_id).to_a
+    shared_artworks = Artwork.joins(:artwork_shares).where(artwork_shares: { viewer_id: user_id }).to_a
+    owned_artworks.concat(shared_artworks)
+  end
 end

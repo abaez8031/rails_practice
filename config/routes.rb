@@ -3,7 +3,12 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  resources :users
+  resources :users, only: [:index, :show, :create, :update, :destroy]
+  resources :artworks, only: [:show, :create, :update, :destroy]
+  resources :artwork_shares, only: [:create, :destroy]
+  resources :users do
+    resources :artworks, only: [:index]
+  end
   # get 'users', to: 'users#index'
   # post 'users', to: 'users#create'
   # get 'users/new', to: 'users#new', as: 'new_user'
